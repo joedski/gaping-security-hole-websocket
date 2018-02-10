@@ -1,0 +1,25 @@
+{
+  "name": "gaping-security-hole",
+  "version": "0.0.0",
+  "description": "Don't actually spin this up anyhere or you're an idiot.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "websocket",
+    "pwn",
+    "do-not-use"
+  ],
+  "author": "Joseph Sikorski <joedski@gmail.com>",
+  "license": "WTFPL",
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-static": "^4.0.2",
+    "ws": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
+  }
+}

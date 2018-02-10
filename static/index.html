@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gaping Security Hole</title>
+</head>
+<body>
+  <script>
+    var s;
+
+    function createWebSocket() {
+      s = new WebSocket('ws://localhost:9090');
+
+      s.onopen = event => {
+        console.log('Socket is opened!', event);
+      };
+
+      s.onmessage = event => {
+        try {
+          const { stdout, stderr } = JSON.parse(event.data);
+          console.log(stdout);
+          if (stderr) {
+            console.warn(stderr);
+          }
+        }
+        catch (error) {
+          console.error('Error trying to process response!', error);
+        }
+      };
+
+      s.onerror = error => {
+        console.log('Socket error!', error);
+        console.log('Waiting a second then trying to reopen...');
+        setTimeout(createWebSocket, 1000);
+      };
+
+      s.onclose = event => {
+        console.log('Socket closed!', event);
+        console.log('Waiting a second then trying to reopen...');
+        setTimeout(createWebSocket, 1000);
+      };
+    }
+
+    createWebSocket();
+  </script>
+</body>
+</html>
