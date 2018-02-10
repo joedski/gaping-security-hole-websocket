@@ -9,6 +9,8 @@ const WS_PORT = process.env.WS_PORT || 9090;
 const wss = new WebSocket.Server({ port: WS_PORT });
 
 wss.on('connection', ws => {
+  console.log('Socket opened!');
+
   ws.on('message', message => {
     console.log('received: %s', message);
 
@@ -23,7 +25,13 @@ wss.on('connection', ws => {
     });
   });
 
-  // ws.send('something');
+  ws.on('error', error => {
+    console.error(error);
+  });
+
+  ws.on('close', event => {
+    console.log('Socket closed:', event);
+  });
 });
 
 console.log(`websocket server listening on ${WS_PORT}`);
